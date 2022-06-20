@@ -22,6 +22,13 @@ class Legume
     #[ORM\Column(type: 'float')]
     private $prix;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $image;
+
+    #[ORM\ManyToOne(targetEntity: Maraicher::class, inversedBy: 'legumes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $maraicher;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +66,30 @@ class Legume
     public function setPrix(float $prix): self
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getMaraicher(): ?Maraicher
+    {
+        return $this->maraicher;
+    }
+
+    public function setMaraicher(?Maraicher $maraicher): self
+    {
+        $this->maraicher = $maraicher;
 
         return $this;
     }

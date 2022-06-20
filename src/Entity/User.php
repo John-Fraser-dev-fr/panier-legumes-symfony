@@ -33,6 +33,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $phone;
 
+    #[ORM\Column(type: 'integer')]
+    private $n_rue;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $rue;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $cd_postal;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $ville;
+
 
     public function getId(): ?int
     {
@@ -83,7 +95,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): null | string
     {
         return $this->password;
     }
@@ -136,6 +148,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getNRue(): ?int
+    {
+        return $this->n_rue;
+    }
+
+    public function setNRue(int $n_rue): self
+    {
+        $this->n_rue = $n_rue;
+
+        return $this;
+    }
+
+    public function getRue(): ?string
+    {
+        return $this->rue;
+    }
+
+    public function setRue(string $rue): self
+    {
+        $this->rue = $rue;
+
+        return $this;
+    }
+
+    public function getCdPostal(): ?string
+    {
+        return $this->cd_postal;
+    }
+
+    public function setCdPostal(string $cd_postal): self
+    {
+        $this->cd_postal = $cd_postal;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(string $ville): self
+    {
+        $this->ville = $ville;
 
         return $this;
     }
