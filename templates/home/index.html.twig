@@ -1,7 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Hello HomeController!
+{% endblock %}
 
 {% block body %}
-
+	<div class="d-flex justify-content-md-center p-5">
+		<div class="card text-white bg-primary mb-3 m-3 col-6" style="max-width: 20rem;">
+			<div class="card-body">
+				<h4 class="card-title p-2">Déjà client ?</h4>
+				{% if error %}
+					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
+				<form action="{{ path('login2')}}" method="POST">
+					<div class="form-group mb-2 mt-3">
+						<input placeholder="Adresse email" id="username" name="_username" type="text" class="form-control">
+					</div>
+					<div class="form-group mb-2">
+						<input placeholder="Mot de passe" id="password" name="_password" type="password" class="form-control">
+					</div>
+					<div class="form-group">
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+						<button type="submit" class="btn btn-dark w-100">Connexion</button>
+					</div>
+				</form>
+				<p>Nouveau client ?
+					<a class="text-light" href="{{path('registration')}}">Inscrivez-vous</a>
+				</p>
+			</div>
+		</div>
+		<div class="card text-white bg-primary mb-3 m-3 col-6" style="max-width: 20rem;">
+			<div class="card-body">
+				<h4 class="card-title p-2">Vous êtes maraîcher ?</h4>
+                {% if error %}
+					<div class="alert alert-danger">Oups !</div>
+				{% endif %}
+				<form action="{{ path('app_login')}}" method="POST">
+             
+					<div class="form-group mb-2 mt-3">
+						<input placeholder="Adresse email" id="username" name="_username" type="text" class="form-control">
+					</div>
+					<div class="form-group mb-2">
+						<input placeholder="Mot de passe" id="password" name="_password" type="password" class="form-control">
+					</div>
+					<div class="form-group">
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+						<button type="submit" class="btn btn-dark w-100">Connexion</button>
+					</div>
+              
+				</form>
+				<p>Nouveau maraîcher ?
+					<a class="text-light" href="{{path('registration_maraicher')}}">Inscrivez-vous</a>
+				</p>
+			</div>
+		</div>
+	</div>
 {% endblock %}

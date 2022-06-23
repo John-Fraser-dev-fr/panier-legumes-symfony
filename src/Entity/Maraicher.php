@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\MaraicherRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Legume;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\MaraicherRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: MaraicherRepository::class)]
-class Maraicher
+class Maraicher implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -64,9 +67,26 @@ class Maraicher
         return $this;
     }
 
-    public function getRoles(): ?array
+   /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->roles;
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_MAR';
+
+        return array_unique($roles);
     }
 
     public function setRoles(array $roles): self
@@ -76,7 +96,10 @@ class Maraicher
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): null | string
     {
         return $this->password;
     }
@@ -86,6 +109,15 @@ class Maraicher
         $this->password = $password;
 
         return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getPrenom(): ?string

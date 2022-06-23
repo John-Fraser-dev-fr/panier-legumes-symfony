@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <h4>Inscription</h4>
+
+    {{ form_start(formMar) }}
+   
+        <div class="row">
+            <div class="col-6">
+                {{ form(formMar) }}
+            </div>
+        </div>
+        
+    {{ form_end(formMar) }}
+
+
+{% endblock %}
