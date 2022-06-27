@@ -16,19 +16,13 @@
 		<body>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="#">MPL</a>
+					<a class="navbar-brand" href="{{path('index')}}">MPL</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 
 					<div class="collapse navbar-collapse" id="navbarColor01">
 						<ul class="navbar-nav me-auto">
-							<li class="nav-item">
-								<a class="nav-link" href="#">Liste des produits</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Les producteurs locaux</a>
-							</li>
 							{% if app.user %}
 							<li class="nav-item">
 								<a class="nav-link" href="{{path('logout')}}">Deconnexion</a>
@@ -40,10 +34,16 @@
 					</div>
 				</div>
 			</nav>
-			<div class="container"> {% block body %}{% endblock %}
-				</div>
+			{% if error is defined %}
+			{% if error %}
+		<div class="alert alert-danger w-100">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+	{% endif %}
+	{% endif %}
+            
+			 {% block body %}{% endblock %}
+				
 
-				<footer class="text-center text-lg-start text-dark fixed-bottom bg-primary">
+				<footer class="text-center text-lg-start text-dark sticky -bottom bg-primary">
 					<!-- Section: Social media -->
 					<section class="d-flex justify-content-between p-4 text-white " style="background-color: #343a40">
 						<!-- Left -->

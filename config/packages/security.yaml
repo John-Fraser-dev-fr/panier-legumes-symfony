@@ -19,33 +19,56 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
+
+
+        maraicher:
+           
+            pattern: ^/maraicher
+            
+            provider: maraicher_provider
             lazy: true
+            form_login:
+                
+                login_path: maraicher_login
+                check_path: maraicher_login
+                enable_csrf: true
+
+                default_target_path: index_maraicher
+                use_referer: true
+
+            logout:
+                path: logout
+
+        user:
+            pattern: ^/
             provider: user_provider
 
+            
+          
+            
             form_login:
-                login_path: login2
-                check_path: login2
+                login_path: user_login
+                check_path: user_login
                 enable_csrf: true
+
+                default_target_path: index_user
+                use_referer: true
 
             logout:
                 path: logout
 
-        main2:
-            lazy: true
-            provider: maraicher_provider
+       
 
-            form_login:
-                login_path: app_login
-                check_path: app_login
-                enable_csrf: true
+            
+            
 
-            logout:
-                path: logout
 
-            custom_authenticator: App\Security\LoginMaraicherAuthenticator
 
-            entry_point: form_login
+       
+            
+            
+
+       
                 # where to redirect after logout
                 # target: app_any_route
 
@@ -59,8 +82,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        #- { path: ^/maraicher, roles: ROLE_MAR }
+        #- { path: ^/, roles: ROLE_USER }
 
 when@test:
     security:
