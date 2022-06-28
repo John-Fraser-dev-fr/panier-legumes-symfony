@@ -27,6 +27,7 @@ security:
             
             provider: maraicher_provider
             lazy: true
+           
             form_login:
                 
                 login_path: maraicher_login
@@ -44,7 +45,7 @@ security:
             provider: user_provider
 
             
-          
+           
             
             form_login:
                 login_path: user_login

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <h4>Inscription</h4>
+
+    {{ form_start(formUser) }}
+   
+        <div class="row">
+            <div class="col-6">
+                {{ form(formUser) }}
+            </div>
+        </div>
+        
+    {{ form_end(formUser) }}
+{% if error %}
+		<div class="alert alert-danger w-100">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+	{% endif %}
+    <div class="card text-white bg-primary mb-3 m-3 col-6" style="max-width: 20rem;">
+			<div class="card-body">
+				<h4 class="card-title p-2">Déjà client ?</h4>
+
+
+				<form action="{{ path('login2')}}" method="POST">
+					<div class="form-group mb-2 mt-3">
+						<input placeholder="Adresse email" id="username" name="_username" type="text" class="form-control">
+					</div>
+					<div class="form-group mb-2">
+						<input placeholder="Mot de passe" id="password" name="_password" type="password" class="form-control">
+					</div>
+					<div class="form-group">
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+						<button type="submit" class="btn btn-dark w-100">Connexion</button>
+					</div>
+				</form>
+				<p>Nouveau client ?
+					<a class="text-light" href="{{path('registration')}}">Inscrivez-vous</a>
+				</p>
+			</div>
+		</div>
+
+
+{% endblock %}
