@@ -23,6 +23,10 @@ class DetailsCommande
     #[ORM\JoinColumn(nullable: false)]
     private $commande;
 
+    #[ORM\ManyToOne(targetEntity: Legume::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $legume;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +64,18 @@ class DetailsCommande
     public function setCommande(?Commande $commande): self
     {
         $this->commande = $commande;
+
+        return $this;
+    }
+
+    public function getLegume(): ?Legume
+    {
+        return $this->legume;
+    }
+
+    public function setLegume(?Legume $legume): self
+    {
+        $this->legume = $legume;
 
         return $this;
     }

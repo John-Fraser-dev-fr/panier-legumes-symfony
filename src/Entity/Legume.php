@@ -29,6 +29,9 @@ class Legume
     #[ORM\JoinColumn(nullable: false)]
     private $maraicher;
 
+    #[ORM\Column(type: 'float')]
+    private $quantite;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Legume
     public function setMaraicher(?Maraicher $maraicher): self
     {
         $this->maraicher = $maraicher;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?float
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(float $quantite): self
+    {
+        $this->quantite = $quantite;
 
         return $this;
     }

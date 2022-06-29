@@ -55,6 +55,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->commandes = new ArrayCollection();
     }
 
+    public function __toString(){
+        return $this->email; // 
+    }
+
 
     public function getId(): ?int
     {

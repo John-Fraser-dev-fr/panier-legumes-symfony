@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Legume;
 use App\Entity\Maraicher;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
@@ -9,7 +10,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class AppFixtures extends Fixture
 {
-    public function load(ObjectManager $manager, $min=null, $max=null): void
+    public function load(ObjectManager $manager, $min=null, $max=null, $nbMaxDecimals=null): void
     {
         $faker = \Faker\Factory::create('fr_FR');
 
@@ -46,6 +47,21 @@ class AppFixtures extends Fixture
             ;
 
             $manager->persist($maraicher);
+
+            //Création de legumes lié aux maraichers
+            for($j=1; $j<=mt_rand(1,8); $j++)
+            {
+                $legume = new Legume();
+                $legume->setCategorie('Légumes')
+                        ->setVariete($faker->word())
+                        ->setPrix($faker->randomFloat($nbMaxDecimals = 2, $min = 1, $max = 5))
+                        ->setImage('http://via.placeholder.com/90x90')
+                        ->setMaraicher($maraicher)
+                        ->setQuantite($faker->randomFloat($nbMaxDecimals = 1, $min = 1, $max = 20))
+                ;
+
+                $manager->persist($legume);
+            }
         }
 
 

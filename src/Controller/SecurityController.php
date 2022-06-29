@@ -13,20 +13,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Http\Firewall;
-use Symfony\Component\Security\Http\Firewall\ExceptionListener;
+
 
 class SecurityController extends AbstractController
 {
     ////////REGISTRATION//////////////
     #[Route(path: '/user/inscription', name: 'user_inscription')]
-    public function inscriptionUser(Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $entityManager, Firewall $firewall): Response
+    public function inscriptionUser(Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $entityManager): Response
     {
-      
-        
-
-        dd($firewall);
-       
         //Création d'un nouvel objet User
         $user = new User();
         //Création du formulaire relié à l'entité User
@@ -44,7 +38,7 @@ class SecurityController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Votre inscription a bien été pris en compte !');
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('user_login');
         }
 
         return $this->render('user/inscription.html.twig', [
@@ -52,7 +46,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/inscription/maraicher', name: 'maraicher_inscription')]
+    #[Route(path: '/maraicher/inscription', name: 'maraicher_inscription')]
     public function inscriptionMaraicher(Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $entityManager)
     {
         $maraicher = new Maraicher();
@@ -62,15 +56,15 @@ class SecurityController extends AbstractController
         if ($formMar->isSubmitted() && $formMar->isValid()) {
 
             //Récupere le logo de l'entreprise 
-            $annonceFile = $formMar->get('logo')->getData();
+            $maraicherFile = $formMar->get('logo')->getData();
 
             //Si il y a un fichier
-            if($annonceFile)
+            if($maraicherFile)
             {
                 //Génére un nouveau nom de fichier pour l'image de couverture
-                $fichierLogo = md5(uniqid()) . '.' . $annonceFile->guessExtension();
+                $fichierLogo = md5(uniqid()) . '.' . $maraicherFile->guessExtension();
                 //Envoie du fichier le folder
-                $annonceFile->move(
+                $maraicherFile->move(
                     $this->getParameter('logo_directory'),
                     $fichierLogo
                 );
@@ -87,7 +81,7 @@ class SecurityController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Votre inscription a bien été pris en compte !');
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('maraicher_login');
         }
 
         return $this->render('maraicher/inscription.html.twig', [
@@ -97,11 +91,9 @@ class SecurityController extends AbstractController
 
 
 
-
-
     //////////LOGIN/////////////
     #[Route(path: '/user/login', name: 'user_login')]
-    public function loginUser(AuthenticationUtils $authenticationUtils): Response
+    public function loginUser(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         //Obtient un erreur si il y en a une
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -112,7 +104,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/maraicher/login', name: 'maraicher_login')]
-    public function loginMaraicher(AuthenticationUtils $authenticationUtils): Response
+    public function loginMaraicher(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
