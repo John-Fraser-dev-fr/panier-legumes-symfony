@@ -51,7 +51,7 @@ security:
                 check_path: user_login
                 enable_csrf: true
 
-                default_target_path: index_user
+                default_target_path: legumes
                 use_referer: true
 
             logout:

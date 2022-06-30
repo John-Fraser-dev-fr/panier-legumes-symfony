@@ -4,27 +4,10 @@
 
 {% block body %}
 
-	<h2 class="text-center mt-5 mb-5">Bienvenue {{app.user.prenom}} !</h2>
+	<h2 class="text-center mt-5 mb-5">Bienvenue sur votre espace 
+		{{app.user.prenom}}
+		!</h2>
 
-	<h4 class="text-center mt-5 mb-5">Nos légumes</h4>
+	
 
-
-	<div class="row" style="justify-content:center">
-		{% for legume in legumes %}
-			<div class="card mt-5 m-1 col-3 p-0">
-				<img src="{{legume.image}}" class="img-fluid">
-			<div class="card-body">
-				<h6>
-					<b>{{legume.variete}}</b>
-				</h6>
-				<p class="card-text" style="color:grey">{{legume.categorie}}</p>
-				<p class="card-text text-primary">
-					<b>{{legume.prix}}
-						€/kg</b>
-				</p>
-			</div>
-		</div>
-	   {% endfor %}
-
-    </div>
 {% endblock %}

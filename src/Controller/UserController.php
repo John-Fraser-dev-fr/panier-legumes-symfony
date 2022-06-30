@@ -9,13 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
-    #[Route(path: '/user/index', name: 'index_user')]
-    public function index(LegumeRepository $repoLegume)
+    #[Route(path: '/index', name: 'index_user')]
+    public function index()
     {
-        $legumes = $repoLegume->findAll();
-
         return $this->render('user/index.html.twig',[
-            'legumes' => $legumes
         ]);
     }
 }
