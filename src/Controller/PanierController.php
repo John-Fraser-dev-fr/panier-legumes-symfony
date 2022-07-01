@@ -21,7 +21,7 @@ class PanierController extends AbstractController
         $dataPanier = [];
         $total = 0;
 
-        //Boucle sur panier
+        //Boucle sur panier pour extraire la key(id) associé a la quantité
         foreach($panier as $id => $quantite)
         {
             $legume = $repoLegume->find($id);
@@ -31,7 +31,6 @@ class PanierController extends AbstractController
             ];
             $total += $legume->getPrix() * $quantite;
         }
-
 
         return $this->render('panier/index.html.twig', [
             "dataPanier" => $dataPanier,
@@ -43,7 +42,7 @@ class PanierController extends AbstractController
     #[Route('/panier/add/{id}', name: 'add_panier')]
     public function add(SessionInterface $session, Legume $legume): Response
     {
-        //Récupére le panier
+        //Récupére le panier, si pas de panier : renvoie un tableau vide
         $panier = $session->get("panier", []);
         //récupére l'id du légume en question
         $id = $legume->getId();
@@ -56,8 +55,7 @@ class PanierController extends AbstractController
         }
         else
         {
-            //sinon on le créer et on initialisation à 1
-            $panier[$id] = array();
+            //sinon initialisation à 1
             $panier[$id] = 1;
         }
 
@@ -97,7 +95,7 @@ class PanierController extends AbstractController
 
 
     #[Route('/panier/delete/{id}', name: 'delete_panier')]
-    public function delete(SessionInterface $session, Legume $legume): Response
+    public function deleteLegume(SessionInterface $session, Legume $legume): Response
     {
         //Récupére le panier
         $panier = $session->get("panier", []);

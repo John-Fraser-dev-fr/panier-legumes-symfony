@@ -17,15 +17,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/index', name: 'index')]
-    public function showAll(LegumeRepository $legumeRepository): Response
-    {
-        $legumes = $legumeRepository->findAll();
-
-        return $this->render('home/index.html.twig', [
-            'legumes' => $legumes,
-        ]);
-    }
+     
 
     
 }

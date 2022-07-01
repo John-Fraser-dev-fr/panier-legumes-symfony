@@ -41,7 +41,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('user_login');
         }
 
-        return $this->render('user/inscription.html.twig', [
+        return $this->render('security/user_inscription.html.twig', [
             'formUser' => $formUser->createView()
         ]);
     }
@@ -84,7 +84,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('maraicher_login');
         }
 
-        return $this->render('maraicher/inscription.html.twig', [
+        return $this->render('security/maraicher_inscription.html.twig', [
             'formMar' => $formMar->createView()
         ]);
     }
@@ -100,7 +100,7 @@ class SecurityController extends AbstractController
         // Dernier nom entré par l'utilisateur
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('user/connexion.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/user_connexion.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     #[Route(path: '/maraicher/login', name: 'maraicher_login')]
@@ -109,7 +109,7 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('maraicher/connexion.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/maraicher_connexion.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
 
