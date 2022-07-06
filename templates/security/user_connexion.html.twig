@@ -4,7 +4,13 @@
 
 {% block body %}
 
-    <h4>Connexion</h4>
+{% if app.user %}
+
+<h1>Vous êtes déjà connecté en tant que {{app.user.email}}</h1>
+
+{% else %}
+	
+    <h2>Connexion</h2>
 
     <div class="card text-white bg-primary mb-3 m-3 col-6" style="max-width: 20rem;">
 			<div class="card-body">
@@ -28,6 +34,8 @@
 				</p>
 			</div>
 		</div>
+		
+{% endif %}
 
 
 {% endblock %}
