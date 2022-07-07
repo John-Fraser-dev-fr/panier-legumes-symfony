@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+	<h2 class="text-center mt-5">Voici la liste des produits de {{maraicher.entreprise}} :</h2>
+
+	
+
+	<div class="row mb-5" style="justify-content:center">
+		{% for legume in legumes %}
+			<div class="card mt-5 m-1 col-3 p-0">
+				<img src="{{legume.image}}" class="img-fluid">
+				<div class="card-body">
+					<h6>
+						<b>{{legume.variete}}</b>
+					</h6>
+					<p class="card-text" style="color:grey">{{legume.categorie}}</p>
+					<p class="card-text text-primary">
+						<b>{{legume.prix}}
+							€/kg</b>
+					</p>
+				</div>
+                <div class="card-footer">
+                    <a href="{{path('add_panier', {id: legume.id})}}" class="btn btn-success">
+                        <i class="bi bi-cart-fill"> Ajouter au panier</i>
+                    </a>
+	            </div>
+			</div>
+
+		{% endfor %}
+
+	</div>
+
+{% endblock %}

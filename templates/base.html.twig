@@ -25,16 +25,16 @@
 						<ul class="navbar-nav me-auto">
 							{% if app.user %}
 							    <li class="nav-item">
-									<a class="nav-link" href="{{path('logout')}}">{{app.user.email}}</a>
+									<a class="nav-link" href="#">{{app.user.email}}</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="{{path('logout')}}">Deconnexion</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="{{path('legumes')}}">Nos légumes</a>
+									<a class="nav-link" href="{{path('all_maraicher')}}">Nos maraîchers</a>
 								</li>
 								<li class="nav-item">
 								    <a class="nav-link" href="{{path('index_panier')}}"><i class="bi bi-cart-fill"></i></a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('logout')}}">Deconnexion</a>
 								</li>
 							{% endif %}
 
@@ -45,12 +45,13 @@
 			</nav>
 			{% if error is defined %}
 				{% if error %}
-					<div class="alert alert-danger w-100">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					<div class="alert alert-dismissible alert-danger w-100">{{ error.messageKey|trans(error.messageData, 'security') }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
 				{% endif %}
 			{% endif %}
 
 			{% for message in app.flashes('success') %}
-				<div class="alert alert-success alert-dismissible fade show">
+				<div class="alert alert-success alert-dismissible">
 					{{ message }}
 					<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 
@@ -58,10 +59,9 @@
 			{% endfor %}
 
 			{% for message in app.flashes('danger') %}
-				<div class="alert alert-danger alert-dismissible fade show">
+				<div class="alert alert-dismissible alert-danger">
 					{{ message }}
 					<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-
 				</div>
 			{% endfor %}
 
@@ -69,7 +69,7 @@
 
 
 			<footer
-				class="text-center text-lg-start text-dark sticky -bottom bg-primary">
+				class="text-center text-lg-start text-dark sticky-bottom bg-primary mt-5">
 				<!-- Section: Social media -->
 				<section
 					class="d-flex justify-content-between p-4 text-white " style="background-color: #343a40">

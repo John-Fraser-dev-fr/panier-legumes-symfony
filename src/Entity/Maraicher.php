@@ -45,6 +45,9 @@ class Maraicher implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'maraicher', targetEntity: Legume::class, orphanRemoval: true)]
     private $legumes;
 
+    #[ORM\Column(type: 'string', length: 3)]
+    private $n_dpt;
+
     public function __construct()
     {
         $this->legumes = new ArrayCollection();
@@ -206,6 +209,18 @@ class Maraicher implements UserInterface, PasswordAuthenticatedUserInterface
                 $legume->setMaraicher(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNDpt(): ?string
+    {
+        return $this->n_dpt;
+    }
+
+    public function setNDpt(string $n_dpt): self
+    {
+        $this->n_dpt = $n_dpt;
 
         return $this;
     }

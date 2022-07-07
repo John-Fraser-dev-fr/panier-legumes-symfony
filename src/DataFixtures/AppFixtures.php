@@ -26,7 +26,8 @@ class AppFixtures extends Fixture
                 ->setNom($faker->lastName())
                 ->setVille($faker->city())
                 ->setEntreprise($faker->company())
-                ->setLogo('http://via.placeholder.com/90x90');
+                ->setLogo('http://via.placeholder.com/90x90')
+                ->setNDpt($faker->numberBetween($min = 01, $max = 95));
 
             $manager->persist($maraicher);
 

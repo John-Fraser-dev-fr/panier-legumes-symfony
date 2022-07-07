@@ -8,13 +8,17 @@
 
 		<div class="justify-content-center position-absolute bottom-50 start-50 translate-middle">
 			<h1 class="text-light text-center display-3">Mon panier Local</h1>
-			<div class="d-grid gap-2 text-center">
-				<button class="btn btn-lg btn-primary" type="button"><a href="{{path( 'user_login')}}" class="text-decoration-none text-light">Je suis client</button>
-				<button class="btn btn-lg btn-primary" type="button"><a href="{{path( 'maraicher_login')}}" class="text-decoration-none text-light">Je suis maraîcher</button>
-			</div>
-		</div>
+			{% if not app.user %}
+				<div class="d-grid gap-2 text-center">
+					<button class="btn btn-lg btn-primary" type="button">
+						<a href="{{path( 'user_login')}}" class="text-decoration-none text-light">Je suis client</button>
+						<button class="btn btn-lg btn-primary" type="button">
+							<a href="{{path( 'maraicher_login')}}" class="text-decoration-none text-light">Je suis maraîcher</button>
+						</div>
+			{% endif %}
+				</div>
 
-		<img alt="" src="{{ asset('images/image_banner.jpeg') }}" class="img-fluid">
-	</div>
+				<img alt="" src="{{ asset('images/image_banner.jpeg') }}" class="img-fluid">
+			</div>
 
 {% endblock %}

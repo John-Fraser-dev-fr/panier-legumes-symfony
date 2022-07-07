@@ -93,7 +93,7 @@ class SecurityController extends AbstractController
 
     //////////LOGIN/////////////
     #[Route(path: '/user/login', name: 'user_login')]
-    public function loginUser(AuthenticationUtils $authenticationUtils, Request $request): Response
+    public function loginUser(AuthenticationUtils $authenticationUtils): Response
     {
         //Obtient un erreur si il y en a une
         $error = $authenticationUtils->getLastAuthenticationError();

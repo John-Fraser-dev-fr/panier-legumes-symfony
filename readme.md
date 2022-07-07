@@ -13,7 +13,7 @@ Symfony CLI
 
 symfony server:start
 
-## Test
+## Test (générer un rapport)
 
-php bin/phpunit --testdox
+php bin/phpunit --coverage-html var/log/test/test-coverage
 
