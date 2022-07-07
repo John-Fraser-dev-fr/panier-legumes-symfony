@@ -3,6 +3,7 @@
 namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class RegistrationFunctionnalTest extends WebTestCase
 {
@@ -22,7 +23,7 @@ class RegistrationFunctionnalTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/user/inscription');
 
-        //Cherche le bouton connexion
+        //Cherche le bouton inscription
         $buttonCrawlerNode = $crawler->selectButton('Inscription');
         //Récupére le formulaire associé au bouton
         $formUser = $buttonCrawlerNode->form();
@@ -63,12 +64,23 @@ class RegistrationFunctionnalTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/maraicher/inscription');
 
-        //Cherche le bouton connexion
+        //Cherche le bouton inscription
         $buttonCrawlerNode = $crawler->selectButton('Inscription');
         //Récupére le formulaire associé au bouton
         $formMaraicher = $buttonCrawlerNode->form();
 
+        //Récupére le fichier téléchargé
+        $logo = new UploadedFile(__DIR__. '/test-files/logoTest.jpeg', 'logoTest.jpeg');
+
         //Passe des paramétres aux champs du formulaire
+        $formMaraicher['maraicher[prenom]'] = 'john';
+        $formMaraicher['maraicher[nom]'] = 'fraser';
+        $formMaraicher['maraicher[email]'] = 'test@test.fr';
+        $formMaraicher['maraicher[password]'] = 'password';
+        $formMaraicher['maraicher[ville]'] = 'paris';
+        $formMaraicher['maraicher[entreprise]'] = 'entreprise';
+        $formMaraicher['maraicher[logo]'] = $logo;
+      
         $formMaraicher = $buttonCrawlerNode->form([
             'maraicher[prenom]' => 'john',
             'maraicher[nom]' => 'fraser',
