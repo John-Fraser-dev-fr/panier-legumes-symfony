@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Commande;
 use App\Entity\DetailsCommande;
 use App\Form\CommandeType;
+use App\Repository\CommandeRepository;
 use App\Repository\LegumeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -76,6 +77,20 @@ class CommandeController extends AbstractController
         return $this->render('commande/index.html.twig', [
             'total' => $total,
             'formCommande' => $formCommande->createView()
+        ]);
+    }
+
+    #[Route('/user/mes_commandes', name: 'commandeByUser')]
+    public function showByUser(CommandeRepository $commandeRepository): Response
+    {
+        //récupére l'utilisateur
+        $user = $this->getUser();
+
+
+        $commandes = $commandeRepository->findBy(['user' => $user], ['id' => 'desc']);
+
+        return $this->render('user/commandes.html.twig', [
+            'commandes' => $commandes,
         ]);
     }
 }
