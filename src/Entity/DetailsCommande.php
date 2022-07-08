@@ -19,7 +19,7 @@ class DetailsCommande
     #[ORM\Column(type: 'float')]
     private $prix;
 
-    #[ORM\ManyToOne(targetEntity: Commande::class, inversedBy: 'detailsCommandes')]
+    #[ORM\ManyToOne(targetEntity: Commande::class, inversedBy: 'detailsCommandes' )]
     #[ORM\JoinColumn(nullable: false)]
     private $commande;
 
@@ -27,10 +27,13 @@ class DetailsCommande
     #[ORM\JoinColumn(nullable: false)]
     private $legume;
 
+   
+
     public function getId(): ?int
     {
         return $this->id;
     }
+    
 
     public function getQuantite(): ?float
     {

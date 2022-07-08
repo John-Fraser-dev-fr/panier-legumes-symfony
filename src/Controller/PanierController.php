@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PanierController extends AbstractController
 {
-    #[Route('/panier', name: 'index_panier')]
+    #[Route('/user/panier', name: 'index_panier')]
     public function index(SessionInterface $session, LegumeRepository $repoLegume): Response
     {
         //Récupére le panier
