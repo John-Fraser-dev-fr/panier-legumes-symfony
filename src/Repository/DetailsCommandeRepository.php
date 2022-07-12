@@ -39,9 +39,7 @@ class DetailsCommandeRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return DetailsCommande[] Returns an array of DetailsCommande objects
-//     */
+   
 //    public function findByExampleField($value): array
 //    {
 //        return $this->createQueryBuilder('d')

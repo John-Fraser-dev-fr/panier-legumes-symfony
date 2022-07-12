@@ -6,6 +6,7 @@ use App\Entity\Commande;
 use App\Entity\DetailsCommande;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
+use App\Repository\DetailsCommandeRepository;
 use App\Repository\LegumeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -86,11 +87,58 @@ class CommandeController extends AbstractController
         //récupére l'utilisateur
         $user = $this->getUser();
 
-
         $commandes = $commandeRepository->findBy(['user' => $user], ['id' => 'desc']);
 
         return $this->render('user/commandes.html.twig', [
             'commandes' => $commandes,
         ]);
+    }
+
+    #[Route('/user/commande/{id}', name: 'info_commande')]
+    public function infoCommande(CommandeRepository $commandeRepository, $id, DetailsCommandeRepository $detailsCommandeRepository): Response
+    {
+        //récupére l'utilisateur
+        $user = $this->getUser();
+        //récupére la commande
+        $commande = $commandeRepository->find($id);
+        //récupére le propiétaire de la commande
+        $commandeOfUser = $commande->getUser();
+
+        //récupére le details commande 
+        $commandeDetails = $detailsCommandeRepository->findBy(['commande' => $commande]);
+
+        return $this->render('commande/info.html.twig', [
+            'commande' => $commande,
+            'commandeDetails' => $commandeDetails
+        ]);
+    }
+
+
+    #[Route('/user/commande/{id}/supp', name: 'delete_commande')]
+    public function delete(CommandeRepository $commandeRepository, $id, EntityManagerInterface $entityManager)
+    {
+        //récupére l'utilisateur
+        $user = $this->getUser();
+        //récupére la commande
+        $commande = $commandeRepository->find($id);
+        //récupére le propiétaire de la commande
+        $commandeOfUser = $commande->getUser();
+
+        //Si le propriétaire de la commande est égale à l'utilisateur
+        if($commandeOfUser === $user)
+        {
+            //Supprime de la BDD
+            $entityManager->remove($commande);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre commande a bien été supprimée !');
+            return $this->redirectToRoute('commandeByUser');
+        }
+        else
+        {
+            $this->addFlash('danger', 'Vous n\'avez pas le droit de supprimer cette commande !');
+            return $this->redirectToRoute('index');
+        }
+   
     }
 }

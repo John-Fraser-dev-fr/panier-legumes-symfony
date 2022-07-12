@@ -4,11 +4,11 @@
 
 {% block body %}
 
-	<h2 class="mt-5 mb-5">Mes annonces</h2>
+	<h2 class="mt-5 mb-5">Historique des commandes :</h2>
 
 	{% if commandes|length == null %}
 
-		<h2 class="mt-5">Vous n'avez aucune annonce.</h2>
+		<h5 class="mt-5">Vous n'avez aucune commande.</h5>
 
 	{% else %}
 
@@ -19,6 +19,7 @@
 					<th scope="col">Montant</th>
 					<th scope="col">Date</th>
 					<th scope="col">Status</th>
+                    <th scope="col">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -33,7 +34,15 @@
                         {% endif %}
                         {% if commande.status == 1 %}
                             <td>Validée</td>
-                        {% endif %}      
+                        {% endif %}  
+                        <td>
+                            <a href="{{path('delete_commande', {id: commande.id} )}}" class="text-decoration-none">
+							    <i class="bi bi-trash-fill" style="color:red"></i>
+						    </a>
+                            <a href="{{path('info_commande', {id: commande.id})}}">
+                                <i class="bi bi-info-circle-fill"></i>
+                            </a>
+                        </td>    
 					</tr>
 				{% endfor %}
 			</tbody>

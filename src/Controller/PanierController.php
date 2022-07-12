@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Legume;
+use App\Entity\Maraicher;
 use App\Repository\LegumeRepository;
+use App\Repository\MaraicherRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -12,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PanierController extends AbstractController
 {
     #[Route('/user/panier', name: 'index_panier')]
-    public function index(SessionInterface $session, LegumeRepository $repoLegume): Response
+    public function index(SessionInterface $session, LegumeRepository $repoLegume, MaraicherRepository $maraicherRepository): Response
     {
         //Récupére le panier
         $panier = $session->get("panier", []);
@@ -21,20 +23,34 @@ class PanierController extends AbstractController
         $dataPanier = [];
         $total = 0;
 
+      
+
         //Boucle sur panier pour extraire la key(id) associé a la quantité
         foreach($panier as $id => $quantite)
         {
             $legume = $repoLegume->find($id);
+            $maraicher = $legume->getMaraicher();
             $dataPanier[] = [
                 "legume" => $legume,
-                "quantite" => $quantite
+                "quantite" => $quantite,
+                "maraicher"=> $maraicher
             ];
             $total += $legume->getPrix() * $quantite;
+
         }
+
+ 
+        
+     
+
+      
+       
+
 
         return $this->render('panier/index.html.twig', [
             "dataPanier" => $dataPanier,
-            "total" => $total        
+            "total" => $total,
+            "maraicher" => $maraicher    
         ]);
     }
 

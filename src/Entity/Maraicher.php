@@ -53,6 +53,11 @@ class Maraicher implements UserInterface, PasswordAuthenticatedUserInterface
         $this->legumes = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->entreprise;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
