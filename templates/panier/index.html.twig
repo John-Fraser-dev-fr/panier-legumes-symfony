@@ -12,10 +12,11 @@
 			<div class="col">
 				<div class="p-3 border bg-light">
 					
-				
-					{% for element in dataPanier %}
-					
+				{% for element in dataPanier %}
 						<div class="d-flex bg-white">
+						<div>
+						<p>{{element.legume.maraicher.entreprise}}</p>
+					</div>
 							<div>
 								<img src="{{element.legume.image}}" class="img-fluid">
 							</div>
@@ -26,7 +27,7 @@
 								<p>{{element.legume.prix}}
 									€/kg</p>
 							</div>
-							<div>
+							
 								<div>
 									<p>{{element.quantite}}</p>
 								</div>
@@ -34,13 +35,11 @@
 									<a href="{{path('add_panier', {id: element.legume.id} )}}" class="text-decoration-none"/>
 									    <i class="bi bi-plus-circle-fill"></i>
 								    </a>
-							    </div>
-							    <div>
-								    <a href="{{path('remove_panier', {id: element.legume.id} )}}" class="text-decoration-none"/>
+									 <a href="{{path('remove_panier', {id: element.legume.id} )}}" class="text-decoration-none"/>
 								        <i class="bi bi-dash-circle-fill"></i>
 							        </a>
-						        </div>
-					        </div>
+							    </div>
+					        
 					        <div>
 						        <p>{{element.quantite * element.legume.prix}} €</p>
 					        </div>
@@ -48,11 +47,12 @@
 							    <a href="{{path('delete_panier', {id: element.legume.id} )}}"/><i class="bi bi-trash-fill" style="color:red"></i></a>
 							</div>
 				        </div>
-						<div>
-						    {{element.maraicher.entreprise}}
-						</div>
+				
 
 				    {% endfor %} 
+				
+
+					
 			    </div>
 		    </div>
 

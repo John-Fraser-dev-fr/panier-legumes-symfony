@@ -51,7 +51,7 @@ security:
                 check_path: user_login
                 enable_csrf: true
 
-                default_target_path: all_maraicher
+                default_target_path: home_choice_dpt
                 use_referer: true
 
             logout:

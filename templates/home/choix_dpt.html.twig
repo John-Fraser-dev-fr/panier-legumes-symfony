@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+	<h2 class="text-center mt-5 text-primary">Première étape</h2>
+    <h5 class="text-center mt-5 m-5">Choisissez votre département :</h5>
+
+    {{ form_start(formSelectDpt) }}
+   
+   <div class="text-center">
+        <div class="row justify-content-center">
+            <div class="col-3">
+                {{ form(formSelectDpt) }}
+            </div>
+        </div>
+    </div>
+        
+    {{ form_end(formSelectDpt) }}
+
+	
+
+{% endblock %}

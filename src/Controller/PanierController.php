@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PanierController extends AbstractController
 {
+
     #[Route('/user/panier', name: 'index_panier')]
     public function index(SessionInterface $session, LegumeRepository $repoLegume, MaraicherRepository $maraicherRepository): Response
     {
@@ -23,34 +24,26 @@ class PanierController extends AbstractController
         $dataPanier = [];
         $total = 0;
 
-      
+        
 
         //Boucle sur panier pour extraire la key(id) associé a la quantité
         foreach($panier as $id => $quantite)
         {
             $legume = $repoLegume->find($id);
-            $maraicher = $legume->getMaraicher();
+            
             $dataPanier[] = [
                 "legume" => $legume,
                 "quantite" => $quantite,
-                "maraicher"=> $maraicher
             ];
+            
             $total += $legume->getPrix() * $quantite;
-
         }
 
- 
-        
-     
-
       
-       
-
 
         return $this->render('panier/index.html.twig', [
             "dataPanier" => $dataPanier,
             "total" => $total,
-            "maraicher" => $maraicher    
         ]);
     }
 
@@ -77,6 +70,7 @@ class PanierController extends AbstractController
 
         //Sauvegarde le panier dans la session
         $session->set("panier", $panier);
+
 
         return $this->redirectToRoute('index_panier');
     }

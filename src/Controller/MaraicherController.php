@@ -16,15 +16,7 @@ class MaraicherController extends AbstractController
         return $this->render('maraicher/index.html.twig');
     }
 
-    #[Route(path: '/user/maraicher/all', name: 'all_maraicher')]
-    public function showAll(MaraicherRepository $MaraicherRepository)
-    {
-        $maraichers= $MaraicherRepository->findAll();
-
-        return $this->render('maraicher/showAll.html.twig', [
-            'maraichers' => $maraichers
-        ]);
-    }
+ 
 
     #[Route(path: '/user/maraicher/{id}', name: 'maraicher')]
     public function show(MaraicherRepository $MaraicherRepository, $id, LegumeRepository $legumeRepository)
