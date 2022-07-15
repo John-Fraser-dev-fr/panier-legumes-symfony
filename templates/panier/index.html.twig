@@ -4,73 +4,89 @@
 
 {% block body %}
 
-	<h1 class="mt-5 m-5 text-center">Bienvenue sur votre panier :</h1>
+	<div class="position-relative m-4 col-9 mx-auto mt-5">
+		<h5 class="text-primary position-absolute top-0 start-0 translate-middle">Composez votre panier</h5>
+		<h5 class="text-secondary position-absolute top-0 start-50 translate-middle">Choisir une date</h5>
+		<h5 class="text-secondary position-absolute top-0 start-100 translate-middle">Valider la commande</h5>
+	</div>
 
+	<div style="height: 1rem"></div>
 
-	<div class="px-4 mt-5">
-		<div class="row gx-5">
-			<div class="col">
-				<div class="p-3 border bg-light">
-					
-				{% for element in dataPanier %}
-						<div class="d-flex bg-white">
-						<div>
-						<p>{{element.legume.maraicher.entreprise}}</p>
-					</div>
-							<div>
-								<img src="{{element.legume.image}}" class="img-fluid">
-							</div>
-							<div>
-								<p>{{element.legume.variete}}</p>
-							</div>
-							<div>
-								<p>{{element.legume.prix}}
-									€/kg</p>
-							</div>
-							
-								<div>
-									<p>{{element.quantite}}</p>
-								</div>
-								<div>
-									<a href="{{path('add_panier', {id: element.legume.id} )}}" class="text-decoration-none"/>
-									    <i class="bi bi-plus-circle-fill"></i>
-								    </a>
-									 <a href="{{path('remove_panier', {id: element.legume.id} )}}" class="text-decoration-none"/>
-								        <i class="bi bi-dash-circle-fill"></i>
-							        </a>
-							    </div>
-					        
-					        <div>
-						        <p>{{element.quantite * element.legume.prix}} €</p>
-					        </div>
-							<div>
-							    <a href="{{path('delete_panier', {id: element.legume.id} )}}"/><i class="bi bi-trash-fill" style="color:red"></i></a>
-							</div>
-				        </div>
-				
-
-				    {% endfor %} 
-				
-
-					
-			    </div>
-		    </div>
-
-		    <div class="col">
-			    <div class="p-3 border bg-light">
-				    <div class="d-flex justify-content-between">
-					    <p><small>Total de votre commande :</small></p>
-					    <p><b>{{total}} €</b></p>
-				    </div>
-				    <div>
-					<button class="btn btn-lg btn-primary w-100" type="button">
-						<a href="{{path('index_commande')}}" class="text-decoration-none text-light">Passer la commande</a>
-					</button>
-				</div>
-			</div>
+	<div class="position-relative m-4 col-9 mx-auto mt-5">
+		<div class="progress" style="height: 1px;">
+			<div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 		</div>
+		<button type="button" class="position-absolute top-50 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;">1</button>
+		<button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem;">2</button>
+		<button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem;">3</button>
 	</div>
 
 
+	<div class="row p-3 mt-5">
 
-{% endblock %}
+		<div class="col">
+
+			<div
+				class="p-3 border bg-light rounded">
+				<!-- Maraîcher -->
+				<div class="d-flex mb-3 mt-3 p-2 bg-primary rounded">
+					<div class="rounded-circle bg-white col-1 text-center">
+						<img src="public/logos/{{maraicher.logo}}" class="img-fluid">
+					</div>
+					<div class="col">
+						<h6 class="p-1 m-0 text-white">{{maraicher.entreprise}}</h6>
+					</div>
+				</div>
+				<!-- Produits du panier -->
+				{% for element in dataPanier %}
+					<div class="d-flex bg-white p-2 mb-3 rounded align-items-center gap-2">
+						<div class="col-2 text-center">
+							<img src="{{element.legume.image}}" class="img-fluid">
+						</div>
+						<div class="align-middle text-center col-2">
+							<h6 class="m-0">{{element.legume.variete}}</h6>
+						</div>
+						<div class="align-middle col-2 text-center">
+							<p class="m-0">
+								<small>{{element.legume.prix}}
+									€/kg</small>
+							</p>
+						</div>
+						<div class="border border-primary rounded p-1 col-1">
+							<h6 class="m-0">{{element.quantite}}</h6>
+						</div>
+						<div class="col-1">
+							<a href="{{path('add_panier', {id: element.legume.id} )}}" class="text-decoration-none"/>
+							<i class="bi bi-plus-circle-fill"></i>
+						</a>
+						<a href="{{path('remove_panier', {id: element.legume.id} )}}" class="text-decoration-none"/>
+						<i class="bi bi-dash-circle-fill"></i>
+					</a>
+				</div>
+				<div class="col text-center">
+					<h6 class="m-0">{{element.quantite * element.legume.prix}}
+						€</h6>
+				</div>
+				<div class="col-1 text-center">
+					<a href="{{path('delete_panier', {id: element.legume.id} )}}"/><i class="bi bi-trash-fill" style="color:red"></i>
+				</a>
+			</div>
+		</div>
+	{% endfor %}
+</div></div><!-- Total commande --><div class="col">
+<div class="p-3 border bg-light rounded">
+	<div class="d-flex justify-content-between">
+		<p>
+			<small>Montant total du panier :</small>
+		</p>
+		<p>
+			<b>{{total}}
+				€</b>
+		</p>
+	</div>
+	<div>
+		<button class="btn btn-lg btn-primary w-100" type="button">
+			<a href="{{path('commande_date')}}" class="text-decoration-none text-light">Etape suivante</a>
+		</button>
+	</div>
+</div></div></div>{% endblock %}

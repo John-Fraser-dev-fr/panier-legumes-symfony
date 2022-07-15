@@ -81,6 +81,17 @@ class CommandeController extends AbstractController
         ]);
     }
 
+    #[Route('/user/commande/date', name: 'commande_date')]
+    public function dateforCommande(): Response
+    {
+        
+
+        return $this->render('panier/date.html.twig', [
+
+        ]);
+    }
+
+
     #[Route('/user/mes_commandes', name: 'commandeByUser')]
     public function showByUser(CommandeRepository $commandeRepository): Response
     {

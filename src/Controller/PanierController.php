@@ -30,10 +30,11 @@ class PanierController extends AbstractController
         foreach($panier as $id => $quantite)
         {
             $legume = $repoLegume->find($id);
-            
+            $maraicher = $legume->getMaraicher();
             $dataPanier[] = [
                 "legume" => $legume,
                 "quantite" => $quantite,
+                "maraicher" => $maraicher
             ];
             
             $total += $legume->getPrix() * $quantite;
@@ -44,6 +45,7 @@ class PanierController extends AbstractController
         return $this->render('panier/index.html.twig', [
             "dataPanier" => $dataPanier,
             "total" => $total,
+            "maraicher" => $maraicher
         ]);
     }
 
