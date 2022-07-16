@@ -92,6 +92,8 @@ class CommandeController extends AbstractController
     {
         //Récupére la date en session, si vide, il le créer en renvoyant un tableau vide
         $session->get("date", []);
+
+        $date_now = new \DateTime();
         
         //Formulaire choix date
         $formDateCommande = $this->createForm(DateOrderType::class, null);
@@ -102,10 +104,20 @@ class CommandeController extends AbstractController
             //Récupere la date sélectionner
             $date_order = $formDateCommande->get('date')->getData();
 
-            //Sauvegarde le panier
-            $session->set("date", $date_order);
+            //Si la date de commande est inferieur ou  égale à la date d'aujourd'hui
+            if($date_order <= $date_now)
+            {
+                $this->addFlash('danger', 'Vous ne pouvez pas choisir une date antérieur à aujourd\'hui !');
+                return $this->redirectToRoute('commande_date');
+            }
+            else
+            {
+                //Sauvegarde le panier
+                $session->set("date", $date_order);
 
-            return $this->redirectToRoute('index_commande');
+                return $this->redirectToRoute('index_commande');
+            }
+
         }
 
         return $this->render('panier/date.html.twig', [
