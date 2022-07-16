@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Commande;
-use App\Entity\DetailsCommande;
 use App\Form\CommandeType;
-use App\Repository\CommandeRepository;
-use App\Repository\DetailsCommandeRepository;
+use App\Form\DateOrderType;
+use App\Entity\DetailsCommande;
 use App\Repository\LegumeRepository;
+use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\DetailsCommandeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,11 +18,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CommandeController extends AbstractController
 {
+
     #[Route('/user/commande', name: 'index_commande')]
     public function index(SessionInterface $session, LegumeRepository $repoLegume, EntityManagerInterface $entityManager, Request $request): Response
     {
-        //Récupére le panier
+        //Récupére le panier en session
         $panier = $session->get("panier");
+
+        //Récupére la date en session
+        $date_order = $session->get("date", []);
+
         //Initialise le total
         $total = 0;
 
@@ -61,7 +67,7 @@ class CommandeController extends AbstractController
             //Ajout de la commande
             $commande->setMontant($total)
                 ->setUser($this->getUser())
-                ->setDate(new \DateTime())
+                ->setDate($date_order)
                 ->setStatus(0)
             ;
             //Enregistrement en BDD
@@ -82,14 +88,31 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/user/commande/date', name: 'commande_date')]
-    public function dateforCommande(): Response
+    public function dateForCommande(Request $request, SessionInterface $session, LegumeRepository $repoLegume): Response
     {
+        //Récupére la date en session, si vide, il le créer en renvoyant un tableau vide
+        $session->get("date", []);
         
+        //Formulaire choix date
+        $formDateCommande = $this->createForm(DateOrderType::class, null);
+        $formDateCommande->handleRequest($request);
+
+        if ($formDateCommande->isSubmitted())
+        {
+            //Récupere la date sélectionner
+            $date_order = $formDateCommande->get('date')->getData();
+
+            //Sauvegarde le panier
+            $session->set("date", $date_order);
+
+            return $this->redirectToRoute('index_commande');
+        }
 
         return $this->render('panier/date.html.twig', [
-
+              "formDateCommande" => $formDateCommande->createView()
         ]);
     }
+
 
 
     #[Route('/user/mes_commandes', name: 'commandeByUser')]

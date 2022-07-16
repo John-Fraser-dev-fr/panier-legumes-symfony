@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Legume;
-use App\Entity\Maraicher;
 use App\Repository\LegumeRepository;
 use App\Repository\MaraicherRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +22,8 @@ class PanierController extends AbstractController
         //Création des données du panier
         $dataPanier = [];
         $total = 0;
+        $maraicher = null;
+
 
         
 
@@ -34,7 +35,6 @@ class PanierController extends AbstractController
             $dataPanier[] = [
                 "legume" => $legume,
                 "quantite" => $quantite,
-                "maraicher" => $maraicher
             ];
             
             $total += $legume->getPrix() * $quantite;

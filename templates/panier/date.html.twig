@@ -7,7 +7,7 @@
 	<div class="position-relative m-4 col-9 mx-auto mt-5">
 		<h5 class="text-primary position-absolute top-0 start-0 translate-middle">Composez votre panier</h5>
 		<h5 class="text-primary position-absolute top-0 start-50 translate-middle">Choisir une date</h5>
-		<h5 class="text-secondary position-absolute top-0 start-100 translate-middle">Valider la commande</h5>
+		<h5 class="text-secondary position-absolute top-0 start-100 translate-middle text-center">Valider la commande</h5>
 	</div>
 
 	<div style="height: 1rem"></div>
@@ -21,7 +21,18 @@
 		<button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem;">3</button>
 	</div>
 
-    
+
+ {{ form_start(formDateCommande) }}
+   
+        <div class="row">
+            <div class="col-6">
+                {{ form(formDateCommande) }}
+            </div>
+        </div>
+        
+    {{ form_end(formDateCommande) }}
+
+   
 
 
 {% endblock %}

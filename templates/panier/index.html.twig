@@ -22,6 +22,12 @@
 	</div>
 
 
+     {% if not app.session.get('panier') %}
+
+	<h4 class="text-center mt-5 mb-5">Votre panier est vide.</h4>
+	
+	{% else %}
+		
 	<div class="row p-3 mt-5">
 
 		<div class="col">
@@ -89,4 +95,4 @@
 			<a href="{{path('commande_date')}}" class="text-decoration-none text-light">Etape suivante</a>
 		</button>
 	</div>
-</div></div></div>{% endblock %}
+</div></div></div>{% endif %}{% endblock %}
