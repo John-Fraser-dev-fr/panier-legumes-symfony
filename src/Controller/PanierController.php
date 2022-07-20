@@ -25,6 +25,8 @@ class PanierController extends AbstractController
         $maraicher = null;
 
 
+
+
         
 
         //Boucle sur panier pour extraire la key(id) associé a la quantité

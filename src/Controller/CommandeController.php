@@ -69,6 +69,7 @@ class CommandeController extends AbstractController
                 ->setUser($this->getUser())
                 ->setDate($date_order)
                 ->setStatus(0)
+                ->setMaraicher($maraicher)
             ;
             //Enregistrement en BDD
             $entityManager->persist($commande);
@@ -81,9 +82,31 @@ class CommandeController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
+        //Boucle sur panier pour extraire la key(id) associé a la quantité
+        foreach ($panier as $id => $quantite) 
+        {
+            $legume = $repoLegume->find($id);
+            $maraicher = $legume->getMaraicher();
+            $dataPanier[] = [
+                "legume" => $legume,
+                "quantite" => $quantite,
+                "maraicher" => $maraicher
+            ];
+            $total += $legume->getPrix() * $quantite;
+        }
+
+        
+       
+
+
+        
+
         return $this->render('commande/index.html.twig', [
             'total' => $total,
-            'formCommande' => $formCommande->createView()
+            'formCommande' => $formCommande->createView(),
+            'date_order' => $date_order,
+            'maraicher' => $maraicher,
+            'dataPanier' => $dataPanier
         ]);
     }
 
@@ -93,7 +116,8 @@ class CommandeController extends AbstractController
         //Récupére la date en session, si vide, il le créer en renvoyant un tableau vide
         $session->get("date", []);
 
-        $date_now = new \DateTime();
+        $date_now = new \DateTime("today");
+        
         
         //Formulaire choix date
         $formDateCommande = $this->createForm(DateOrderType::class, null);
@@ -104,13 +128,23 @@ class CommandeController extends AbstractController
             //Récupere la date sélectionner
             $date_order = $formDateCommande->get('date')->getData();
 
-            //Si la date de commande est inferieur ou  égale à la date d'aujourd'hui
-            if($date_order <= $date_now)
+            //calcul l'interval en jour par rapport au jour de commande et le jour choisi 
+            $interval = $date_order->diff($date_now)->format('%a');
+
+
+            //Si la date de commande est inferieur à la date d'aujourd'hui
+            if($date_order < $date_now)
             {
-                $this->addFlash('danger', 'Vous ne pouvez pas choisir une date antérieur à aujourd\'hui !');
+                $this->addFlash('danger', 'Vous avez fait une erreur, veuillez choisir une autre date postérieure à aujourd\'hui !');
                 return $this->redirectToRoute('commande_date');
             }
-            else
+            //Si l'interval en jour = 0 (= aujourd'hui)
+            if($interval == 0)
+            {
+                $this->addFlash('danger', 'Vous ne pouvez pas passer de commande pour le jour-même, veuillez choisir une autre date !');
+                return $this->redirectToRoute('commande_date');
+            }
+            else if($interval >= 1)
             {
                 //Sauvegarde le panier
                 $session->set("date", $date_order);
@@ -118,7 +152,11 @@ class CommandeController extends AbstractController
                 return $this->redirectToRoute('index_commande');
             }
 
+           
+
         }
+
+        
 
         return $this->render('panier/date.html.twig', [
               "formDateCommande" => $formDateCommande->createView()

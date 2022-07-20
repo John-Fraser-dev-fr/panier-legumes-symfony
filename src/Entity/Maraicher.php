@@ -48,9 +48,22 @@ class Maraicher implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 3)]
     private $n_dpt;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $n_rue;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $rue;
+
+    #[ORM\OneToMany(mappedBy: 'maraicher', targetEntity: Commande::class)]
+    private $commandes;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $cd_postal;
+
     public function __construct()
     {
         $this->legumes = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function __toString()
@@ -226,6 +239,72 @@ class Maraicher implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNDpt(string $n_dpt): self
     {
         $this->n_dpt = $n_dpt;
+
+        return $this;
+    }
+
+    public function getNRue(): ?string
+    {
+        return $this->n_rue;
+    }
+
+    public function setNRue(string $n_rue): self
+    {
+        $this->n_rue = $n_rue;
+
+        return $this;
+    }
+
+    public function getRue(): ?string
+    {
+        return $this->rue;
+    }
+
+    public function setRue(string $rue): self
+    {
+        $this->rue = $rue;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setMaraicher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getMaraicher() === $this) {
+                $commande->setMaraicher(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCdPostal(): ?string
+    {
+        return $this->cd_postal;
+    }
+
+    public function setCdPostal(string $cd_postal): self
+    {
+        $this->cd_postal = $cd_postal;
 
         return $this;
     }

@@ -4,16 +4,65 @@
 
 {% block body %}
 
-<h1>Résumé de la commande :</h1>
+	<h2 class="text-center mt-5 mb-5">Résumé de la commande :</h2>
+
+	<div class="d-flex container">
+		<div class="col p-3">
+			<div class="bg-light border rounded p-3">
+				<p>Votre panier sera à récupérer le
+					<b class="text-primary">{{date_order|date('d/m/Y à H:i')}}</b>.</p>
+				<p>A l'adresse suivante :</p>
+				<p class="text-primary">{{maraicher}}</p>
+				<p class="text-primary">{{maraicher.nRue}},
+					{{maraicher.rue}}</p>
+				<p class="text-primary">{{maraicher.ville}}
+					{{maraicher.cdPostal}}</p>
+			</div>
+		</div>
+		<div class="col p-3">
+			<div class="bg-light border rounded p-3">
+				{% for element in dataPanier %}
+					<div class="d-flex justify-content-between">
+						<div class="d-flex">
+                            <div>
+							    <p><b>{{element.legume.variete}}</b></p>
+                            </div>
+                            <div>
+                                <p><small>({{element.legume.quantite}} kg)</small></p>
+                            </div>
+						</div>
+                        <div>
+                            <p>x {{element.quantite}}</p>
+                        </div>
+						<div>
+							<p>
+								<b>{{element.quantite * element.legume.prix}}
+									€</b>
+							</p>
+						</div>
+					</div>
+				{% endfor %}
+				<div class="d-flex justify-content-between">
+					<p>
+						<small>Montant total à régler auprès du maraîcher :</small>
+					</p>
+					<p>
+						<b>{{total}}
+							€</b>
+					</p>
+				</div>
+				{{ form_start(formCommande) }}
+				<div class="row">
+					<div class="w-100">
+						{{ form_widget(formCommande.Confirmer_votre_commande, { 'attr': {
+                              'class': 'w-100 bg-primary'} }) 
+                            }}
+					</div>
+				</div>
+				{{ form_end(formCommande) }}
+			</div>
+		</div>
+	</div>
 
 
- {{ form_start(formCommande) }}
-   
-        <div class="row">
-            <div class="col-6">
-                {{ form(formCommande) }}
-            </div>
-        </div>
-        
-    {{ form_end(formCommande) }}
 {% endblock %}

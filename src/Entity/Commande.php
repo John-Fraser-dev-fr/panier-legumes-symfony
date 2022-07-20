@@ -32,6 +32,10 @@ class Commande
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: DetailsCommande::class, cascade: ["persist"])]
     private $detailsCommandes;
 
+    #[ORM\ManyToOne(targetEntity: Maraicher::class, inversedBy: 'commandes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $maraicher;
+
     public function __construct()
     {
         $this->detailsCommandes = new ArrayCollection();
@@ -116,6 +120,18 @@ class Commande
                 $detailsCommande->setCommande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMaraicher(): ?Maraicher
+    {
+        return $this->maraicher;
+    }
+
+    public function setMaraicher(?Maraicher $maraicher): self
+    {
+        $this->maraicher = $maraicher;
 
         return $this;
     }

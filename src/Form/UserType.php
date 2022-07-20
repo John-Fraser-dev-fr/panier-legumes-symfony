@@ -22,10 +22,6 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             ->add('password', PasswordType::class)
             ->add('phone', IntegerType::class)
-            ->add('n_rue', IntegerType::class)
-            ->add('rue', TextType::class)
-            ->add('cd_postal', IntegerType::class)
-            ->add('ville', TextType::class)
             ->add('Inscription', SubmitType::class);
     }
 

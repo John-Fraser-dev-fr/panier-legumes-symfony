@@ -27,7 +27,10 @@ class AppFixtures extends Fixture
                 ->setVille($faker->city())
                 ->setEntreprise($faker->company())
                 ->setLogo('http://via.placeholder.com/90x90')
-                ->setNDpt($faker->numberBetween($min = 01, $max = 95));
+                ->setNDpt($faker->numberBetween($min = 01, $max = 95))
+                ->setNRue($faker->numberBetween($min = 1, $max = 98))
+                ->setRue($faker->streetName())
+                ->setCdPostal($maraicher->getNDpt().''.$faker->numberBetween($min = 100, $max = 999));
 
             $manager->persist($maraicher);
 
@@ -39,7 +42,7 @@ class AppFixtures extends Fixture
                     ->setPrix($faker->randomFloat($nbMaxDecimals = 2, $min = 1, $max = 5))
                     ->setImage('http://via.placeholder.com/90x90')
                     ->setMaraicher($maraicher)
-                    ->setQuantite($faker->randomFloat($nbMaxDecimals = 1, $min = 1, $max = 20));
+                    ->setQuantite($faker->numberBetween($min = 1, $max = 5));
 
                 $manager->persist($legume);
             }
@@ -53,10 +56,7 @@ class AppFixtures extends Fixture
                 ->setPrenom($faker->firstName())
                 ->setNom($faker->lastName())
                 ->setPhone($faker->phoneNumber())
-                ->setNRue($faker->numberBetween($min = 1, $max = 98))
-                ->setRue($faker->streetName())
-                ->setCdPostal($faker->numberBetween($min = 12538, $max = 87290))
-                ->setVille($faker->city());
+            ;
 
             $manager->persist($user);
 
@@ -64,27 +64,7 @@ class AppFixtures extends Fixture
   
         }
 
-        //Création de commande lié a user
-        for ($i = 1; $i <= 3; $i++) {
-            $commande = new Commande();
-            $commande->setUser($user)
-                ->setMontant($faker->randomFloat($nbMaxDecimals = 2, $min = 20, $max = 100))
-                ->setStatus($faker->numberBetween($min = 0, $max = 3))
-                ->setDate($faker->dateTimeBetween('-6 months'));
-
-            $manager->persist($commande);
-
-            //Création details commande lié à la commande
-            for ($i = 1; $i <= 3; $i++) {
-                $detailsCommande = new DetailsCommande();
-                $detailsCommande->setCommande($commande)
-                    ->setQuantite($faker->numberBetween($min = 1, $max = 5))
-                    ->setPrix($faker->randomFloat($nbMaxDecimals = 2, $min = 1, $max = 5))
-                    ->setLegume($legume);
-
-                $manager->persist($detailsCommande);
-            }
-        }
+        
 
         $manager->flush();
     }
