@@ -4,6 +4,56 @@
 
 {% block body %}
 
-<h2 class="text-center mt-5">Bienvenue maraicher !</h2>
+	<h2 class="text-center mt-5 mb-5">Bienvenue sur votre espace !</h2>
+
+	<div class="container mt-5 mb-5">
+		<h4>Vos légumes actuellement en ligne :</h4>
+
+		{% if not legumes %}
+			<h6 class="text-center mt-5">Vous n'avez aucun légumes.</h6>
+		{% else %}
+  
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Variété</th>
+						<th scope="col">Catégorie</th>
+						<th scope="col">Quantité</th>
+						<th scope="col">Prix</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+                    {% for legume in legumes %}
+					    <tr>
+						    <th scope="row">{{legume.variete}}</th>
+						    <td>{{legume.categorie}}</td>
+						    <td>{{legume.quantite}}</td>
+						    <td>{{legume.prix}}</td>
+                            <td><img src="/images/legumes/{{legume.image}}" class="img-fluid" style="width:90px;height:55px" alt="..."></td>
+                            <td><a href="{{path( 'delete_legume', {'id' : legume.id} )}}">
+								<i class="bi bi-trash3"></i>
+							</a></td>
+					    </tr>
+                    {% endfor %}  
+				</tbody>
+			</table>
+		{% endif %}
+	</div>
+
+    <div class="container mt-5 mb-5">
+		<h4 class="mt-5 mb-5">Ajouter de nouveaux légumes :</h4>
+
+        {{ form_start(formLegume) }}
+   
+        <div class="row">
+            <div class="col-6">
+                {{ form(formLegume) }}
+            </div>
+        </div>
+        
+    {{ form_end(formLegume) }}
+    </div>
 
 {% endblock %}

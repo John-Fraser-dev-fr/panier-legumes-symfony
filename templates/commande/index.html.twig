@@ -28,15 +28,18 @@
 							    <p><b>{{element.legume.variete}}</b></p>
                             </div>
                             <div>
-                                <p><small>({{element.legume.quantite}} kg)</small></p>
+                                <p style="font-size: .75rem">({{element.legume.quantite}} kg)</p>
                             </div>
 						</div>
                         <div>
-                            <p>x {{element.quantite}}</p>
+                            <p style="font-size: .75rem">{{element.legume.prix}} /kg</p>
+                        </div>
+                        <div>
+                            <p style="font-size: .75rem">qte: {{element.quantite}}</p>
                         </div>
 						<div>
 							<p>
-								<b>{{element.quantite * element.legume.prix}}
+								<b>{{element.quantite * element.legume.prix * element.legume.quantite}}
 									€</b>
 							</p>
 						</div>

@@ -11,19 +11,23 @@
 
 	
 
-	<div class="row mb-5" style="justify-content:center">
+	<div class="row justify-content-center">
 		{% for legume in legumes %}
-			<div class="card mt-5 m-1 col-3 p-0">
-				<img src="{{legume.image}}" class="img-fluid">
+			<div class="card m-3 col-3 p-0">
+			    <div class="text-center">
+				    <img src="/images/legumes/{{legume.image}}" class="img-fluid" style="width:100px;height:auto;">
+				</div>
 				<div class="card-body">
 					<h6>
 						<b>{{legume.variete}}</b>
 					</h6>
-					<p class="card-text" style="color:grey">{{legume.categorie}}</p>
-					<p class="card-text text-primary">
-						<b>{{legume.prix}}
-							€/kg</b>
-					</p>
+					<div class="d-flex justify-content-between">
+					    <div>
+					        <div style="font-size: .75rem">{{legume.quantite}} kg</div>
+					        <div>{{legume.prix}} €/kg</div>
+					    </div>
+					    <div><p class="text-primary" style="font-size: 1.3rem">{{legume.quantite * legume.prix }} €</p></div>
+					</div>
 				</div>
                 <div class="card-footer">
                     <a href="{{path('add_panier', {id: legume.id})}}" class="btn btn-success">

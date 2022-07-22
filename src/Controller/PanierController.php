@@ -24,11 +24,6 @@ class PanierController extends AbstractController
         $total = 0;
         $maraicher = null;
 
-
-
-
-        
-
         //Boucle sur panier pour extraire la key(id) associé a la quantité
         foreach($panier as $id => $quantite)
         {
@@ -39,7 +34,7 @@ class PanierController extends AbstractController
                 "quantite" => $quantite,
             ];
             
-            $total += $legume->getPrix() * $quantite;
+            $total += $legume->getPrix() * $quantite * $legume->getQuantite();
         }
 
       
@@ -74,6 +69,7 @@ class PanierController extends AbstractController
 
         //Sauvegarde le panier dans la session
         $session->set("panier", $panier);
+
 
 
         return $this->redirectToRoute('index_panier');

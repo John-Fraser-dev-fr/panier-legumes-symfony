@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class MaraicherType extends AbstractType
@@ -23,6 +24,7 @@ class MaraicherType extends AbstractType
             ->add('password', PasswordType::class)
             ->add('n_rue', IntegerType::class)
             ->add('rue', TextType::class)
+            ->add('n_dpt', IntegerType::class)
             ->add('cd_postal', IntegerType::class)
             ->add('ville', TextType::class)
             ->add('entreprise', TextType::class)

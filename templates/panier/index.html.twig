@@ -22,9 +22,9 @@
 	</div>
 
 
-     {% if not app.session.get('panier') %}
+    {% if not app.session.get('panier') %}
 
-	<h4 class="text-center mt-5 mb-5">Votre panier est vide.</h4>
+	    <h4 class="text-center mt-5 mb-5">Votre panier est vide.</h4>
 	
 	{% else %}
 		
@@ -53,6 +53,7 @@
 							<h6 class="m-0">{{element.legume.variete}}</h6>
 						</div>
 						<div class="align-middle col-2 text-center">
+						   <p class="m-0"><small>{{element.legume.quantite}} kg</small></p>
 							<p class="m-0">
 								<small>{{element.legume.prix}}
 									€/kg</small>
@@ -70,7 +71,7 @@
 					</a>
 				</div>
 				<div class="col text-center">
-					<h6 class="m-0">{{element.quantite * element.legume.prix}}
+					<h6 class="m-0">{{element.quantite * element.legume.prix * element.legume.quantite}}
 						€</h6>
 				</div>
 				<div class="col-1 text-center">

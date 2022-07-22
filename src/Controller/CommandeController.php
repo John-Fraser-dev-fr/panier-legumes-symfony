@@ -50,7 +50,7 @@ class CommandeController extends AbstractController
                     "quantite" => $quantite,
                     "maraicher" => $maraicher
                 ];
-                $total += $legume->getPrix() * $quantite;
+                $total += $legume->getPrix() * $quantite * $legume->getQuantite();
 
                 //Nouveau detail commande
                 $detailsCommande = new DetailsCommande();
@@ -59,7 +59,7 @@ class CommandeController extends AbstractController
                 $commande->addDetailsCommande(
                     $detailsCommande->setCommande($commande->getId()),
                     $detailsCommande->setQuantite($quantite),
-                    $detailsCommande->setPrix($legume->getPrix() * $quantite),
+                    $detailsCommande->setPrix($legume->getPrix() * $quantite * $legume->getQuantite()),
                     $detailsCommande->setLegume($legume)
                 );
             }
@@ -92,7 +92,7 @@ class CommandeController extends AbstractController
                 "quantite" => $quantite,
                 "maraicher" => $maraicher
             ];
-            $total += $legume->getPrix() * $quantite;
+            $total += $legume->getPrix() * $quantite * $legume->getQuantite();
         }
 
         

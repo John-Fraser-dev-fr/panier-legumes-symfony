@@ -6,6 +6,8 @@
 parameters:
     logo_directory: '%kernel.project_dir%/public/logos'
 
+    image_legume_directory: '%kernel.project_dir%/public/images/legumes'
+
 services:
     # default configuration for services in *this* file
     _defaults:
