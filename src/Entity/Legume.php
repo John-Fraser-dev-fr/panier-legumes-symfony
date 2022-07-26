@@ -22,7 +22,7 @@ class Legume
     #[ORM\Column(type: 'float')]
     private $prix;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $image;
 
     #[ORM\ManyToOne(targetEntity: Maraicher::class, inversedBy: 'legumes')]

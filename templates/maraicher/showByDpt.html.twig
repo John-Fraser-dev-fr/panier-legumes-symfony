@@ -8,27 +8,27 @@
     <h5 class="text-center mt-5 m-5">Choisissez votre maraîcher :</h5>
 
 	<div class="row mb-5" style="justify-content:center">
-		{% for maraichersByDpt in maraichersByDpt %}
+		{% for element in maraichersByDpt %}
 			<div class="card mt-5 m-1 col-3 p-0">
-				<img src="public/logos/{{maraichersByDpt.logo}}" class="img-fluid">
+				<img src="/images/logos/{{element.logo}}" class="img-fluid">
 				<div class="card-body">
 					<h6>
-						<b>{{maraichersByDpt.entreprise}}</b>
+						<b>{{element.entreprise}}</b>
 					</h6>
-					<p class="card-text" style="color:grey">{{maraichersByDpt.prenom}}
-						{{maraichersByDpt.nom}}</p>
+					<p class="card-text" style="color:grey">{{element.prenom}}
+						{{element.nom}}</p>
 					<p class="card-text text-primary">
-						<b>{{maraichersByDpt.ville}}</b>
+						<b>{{element.ville}}</b>
 					</p>
 				</div>
 				<div class="card-footer">
-					<a href="{{path('maraicher', {id: maraichersByDpt.id})}}" class="btn btn-success w-100">
+					<a href="{{path('maraicher', {id: element.id})}}" class="btn btn-success w-100">
 						<i class="bi bi-arrow-right-circle-fill"></i> Voir ses produits
 					</a>
 				</div>
 			</div>
 
 		{% endfor %}
-	</div>
+	</div> 
 
 {% endblock %}

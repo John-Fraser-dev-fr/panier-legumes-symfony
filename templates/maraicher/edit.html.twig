@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+<h3>Modification de votre {{legume.variete}}</h3>
+
+    {{ form_start(formLegume) }}
+   
+        <div class="row">
+            <div class="col-6">
+                 <div>
+				    {{ form_label(formLegume, 'Catégorie') }}
+				    {{ form_widget(formLegume.categorie, { 'attr': {
+                    'value': legume.categorie } }) 
+                    }}
+			    </div>
+			    <div>
+				    {{ form_label(formLegume, 'Variété') }}
+				    {{ form_widget(formLegume.variete, { 'attr': {
+                    'value': legume.variete } }) 
+                    }}
+			    </div>
+			    <div>
+				    {{ form_label(formLegume, 'Prix') }}
+				    {{ form_widget(formLegume.prix, { 'attr': {
+                    'value': legume.prix } }) 
+                    }}
+			    </div>
+			    <div>
+				    {{ form_label(formLegume, 'Quantite') }}
+				    {{ form_widget(formLegume.quantite, { 'attr': {
+                    'value': legume.quantite } }) 
+                    }}
+			    </div>
+			    <div>
+				    <img src="/images/legumes/{{legume.image}}" class="img-fluid"  style="width:90px;height:90px" alt="...">
+                    <i class="bi bi-plus-circle-fill" id="show_hide" style="color:green"></i>	
+			    </div>
+                <div id="champ_images" style="display: none">
+					{{ form_widget(formLegume.image)}}
+				</div>
+             
+                    
+        
+              
+			    
+            </div>
+        </div>
+        {{ form_widget(formLegume.ajouter, { 'label': 'Modifier' }) }}
+        
+    {{ form_end(formLegume) }}
+    </div>
+
+
+     <!-- Script pour afficher/masquer champ upload -->
+	<script type="text/javascript">
+
+        //Bouton show/hide image(s)
+		let show_hide = document.getElementById("show_hide");
+        //Champ upload image(s)
+        let champ_images = document.getElementById("champ_images");
+
+        //SI on click et SI le champ upload images n'est pas en display:none, on passe en display:block
+        show_hide.addEventListener("click", () => {
+            if (getComputedStyle(champ_images).display != "none") {
+                champ_images.style.display = "none";
+            } else {
+               champ_images.style.display = "block";
+            }
+        })
+     
+    </script>
+
+{% endblock %}

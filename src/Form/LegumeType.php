@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Legume;
-use Doctrine\DBAL\Types\FloatType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,10 +20,12 @@ class LegumeType extends AbstractType
             ->add('categorie', TextType::class)
             ->add('variete', TextType::class)
             ->add('prix', NumberType::class)
-            ->add('image', FileType::class)
+            ->add('image', FileType::class, [
+                'data_class' => null,
+                'required' => false,
+                'mapped' => false])
             ->add('quantite', IntegerType::class)
-            ->add('Ajouter', SubmitType::class)
-        ;
+            ->add('ajouter', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

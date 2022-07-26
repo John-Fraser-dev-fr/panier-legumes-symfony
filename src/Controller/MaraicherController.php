@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Legume;
 use App\Form\LegumeType;
+use App\Repository\CommandeRepository;
+use App\Repository\DetailsCommandeRepository;
 use App\Repository\LegumeRepository;
 use App\Repository\MaraicherRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,11 +18,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MaraicherController extends AbstractController
 {
     #[Route(path: '/maraicher/index', name: 'index_maraicher')]
-    public function index(MaraicherRepository $MaraicherRepository, LegumeRepository $legumeRepository, Request $request, EntityManagerInterface $entityManager)
+    public function index(MaraicherRepository $MaraicherRepository, LegumeRepository $legumeRepository, Request $request, EntityManagerInterface $entityManager,CommandeRepository $commandeRepository, DetailsCommandeRepository $detailsCommandeRepository)
     {
         //Récupére le maraicher connecté
         $user = $this->getUser();
         $maraicher = $MaraicherRepository->find(['id' => $user]);
+
+        //Récupére les commandes du maraicher
+        $commandes = $commandeRepository->findBy(['maraicher' => $maraicher]);
+
+         
+
+     
+       
+
+     
 
         //récupére les légumes associé au maraicher
         $legumes = $legumeRepository->findBy(['maraicher' => $maraicher]);
@@ -71,6 +83,8 @@ class MaraicherController extends AbstractController
 
         return $this->render('maraicher/index.html.twig',[
             'legumes' => $legumes,
+            'commandes' => $commandes,
+            'maraicher' => $maraicher,
             'formLegume' => $formLegume->createView()
         ]);
     }
