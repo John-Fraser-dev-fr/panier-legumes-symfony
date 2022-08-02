@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Commande;
 use App\Entity\DetailsCommande;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,17 +41,16 @@ class DetailsCommandeRepository extends ServiceEntityRepository
     }
 
    
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('d.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function groupByCommande($commande)
+    {
+       return $this->createQueryBuilder('d')
+            ->andWhere('d.commande = :commande')
+           ->groupBy('d.commande')
+           ->setParameter('commande', $commande)
+            ->getQuery()
+    
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?DetailsCommande
 //    {

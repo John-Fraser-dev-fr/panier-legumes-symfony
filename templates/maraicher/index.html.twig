@@ -8,52 +8,123 @@
 
 	<div class="container mt-5 mb-5">
 
-        <h4 class="mt-5 mb-5">Vos commandes en cours :</h4>
-        {% if commandes is empty %}
+		<h4 class="mt-5 mb-5">Vos commandes en cours :</h4>
+		{% if commandes is empty %}
 			<h6 class="text-center mt-5 mb-5">Vous n'avez aucune commandes en cours.</h6>
 		{% else %}
-            <table class="table table-hover mt-5 mb-5">
+			<table class="table table-hover mt-5 mb-5">
 				<thead>
 					<tr>
-						<th scope="col">N° de commande</th>
+						<th scope="col">N°</th>
 						<th scope="col">Montant</th>
 						<th scope="col">Date de récupération</th>
 						<th scope="col">Légumes</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Actions</th>
+						<th scope="col">Status</th>
 					</tr>
 				</thead>
 				<tbody>
-                    {% for commande in commandes %}
-					    <tr>
-						    <th scope="row">{{commande.id}}</th>
-						    <td>{{commande.montant}} €</td>
-						    <td>{{commande.date | date('d/m/Y à H:i')}}</td>
-						    <td> 
-                                {{commande.maraicher.id}} 
-   
-                            </td>
-                            <td>{{commande.status}}</td>
-                            <td>
-                                <a href="#">
-								    <i class="bi bi-trash3"></i>
-							    </a>
-                                <a href="#">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                            </td>
-					   
-                    {% endfor %}  
+					{% for commande in commandes %}
+						<tr>
+							<th scope="row">{{commande.id}}</th>
+							<td>{{commande.montant}}
+								€</td>
+							<td>{{commande.date | date('d/m/Y à H:i')}}</td>
+							<td>
+								{% for detail in commande.detailsCommandes %}
+
+									<div class="d-flex mt-2">
+										<div class="col-3">
+											<img src="/images/legumes/{{detail.legume.image}}" class="img-fluid" style="width:50px;height:5Opx" alt="...">
+										</div>
+										<div class="col-1"></div>
+										<div class="col-4">
+											<div class="text-primary">{{detail.legume.variete}}
+												({{detail.legume.quantite}}
+												kg)</div>
+											<div>
+												<small>qte:
+													{{detail.quantite}}</small>
+											</div>
+										</div>
+									</div>
+
+								{% endfor %}
+							</td>
+							<td>
+								<div class="d-flex justify-content-around">
+									{% if commande.status == 0 %}
+										<div>
+											<p class="text-danger">En attente de validation</p>
+										</div>
+
+									{% endif %}
+									{% if commande.status == 1 %}
+										<div>
+											<p class="text-warning">Panier validé</p>
+										</div>
+									{% endif %}
+									{% if commande.status == 2 %}
+										<div>
+											<p class="text-primary">Panier récupéré</p>
+										</div>
+
+									{% endif %}
+									<div>
+										<!-- Button modal -->
+										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalStatusCommande{{commande.id}}">
+											<i class="bi bi-pencil"></i>
+										</button>
+									</div>
+								</div>
+
+							</td>
+
+
+							<!-- Modal -->
+							<div class="modal fade" id="modalStatusCommande{{commande.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Status de la commande n°
+												{{commande.id}}</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div
+											class="modal-body">
+                                      
+                                         
+                                                
+                                            
+											{{ form_start(forms[commande.id]) }}
+
+                                             
+                    
+											{{ form_end(forms[commande.id]) }}
+
+                                            
+
+                                
+                                 
+
+                                            
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</tr>
+					{% endfor %}
+
 				</tbody>
 			</table>
-        {% endif %}
+		{% endif %}
 
 
 		<h4>Vos légumes actuellement en ligne :</h4>
 		{% if not legumes %}
 			<h6 class="text-center mt-5">Vous n'avez aucun légumes.</h6>
 		{% else %}
-  
+
 			<table class="table table-hover mt-5 mb-5">
 				<thead>
 					<tr>
@@ -61,45 +132,45 @@
 						<th scope="col">Catégorie</th>
 						<th scope="col">Quantité</th>
 						<th scope="col">Prix</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Actions</th>
+						<th scope="col">Image</th>
+						<th scope="col">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
-                    {% for legume in legumes %}
-					    <tr>
-						    <th scope="row">{{legume.variete}}</th>
-						    <td>{{legume.categorie}}</td>
-						    <td>{{legume.quantite}}</td>
-						    <td>{{legume.prix}}</td>
-                            <td><img src="/images/legumes/{{legume.image}}" class="img-fluid" style="width:90px;height:55px" alt="..."></td>
-                            <td>
-                                <a href="{{path( 'delete_legume', {'id' : legume.id} )}}">
-								    <i class="bi bi-trash3"></i>
-							    </a>
-                                <a href="{{path( 'edit_legume', {'id' : legume.id} )}}">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                            </td>
-					    </tr>
-                    {% endfor %}  
+					{% for legume in legumes %}
+						<tr>
+							<th scope="row">{{legume.variete}}</th>
+							<td>{{legume.categorie}}</td>
+							<td>{{legume.quantite}}</td>
+							<td>{{legume.prix}}</td>
+							<td><img src="/images/legumes/{{legume.image}}" class="img-fluid" style="width:90px;height:55px" alt="..."></td>
+							<td>
+								<a href="{{path( 'delete_legume', {'id' : legume.id} )}}">
+									<i class="bi bi-trash3"></i>
+								</a>
+								<a href="{{path( 'edit_legume', {'id' : legume.id} )}}">
+									<i class="bi bi-pencil"></i>
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
 				</tbody>
 			</table>
 		{% endif %}
 	</div>
 
-    <div class="container mt-5 mb-5">
+	<div class="container mt-5 mb-5">
 		<h4 class="mt-5 mb-5">Ajouter de nouveaux légumes :</h4>
 
-        {{ form_start(formLegume) }}
-   
-        <div class="row">
-            <div class="col-6">
-                {{ form(formLegume) }}
-            </div>
-        </div>
-        
-    {{ form_end(formLegume) }}
-    </div>
+		{{ form_start(formLegume) }}
 
-{% endblock %}
+		<div class="row">
+			<div class="col-6">
+				{{ form(formLegume) }}
+				</div>
+			</div>
+
+			{{ form_end(formLegume) }}
+		</div>
+
+	{% endblock %}
